@@ -23,9 +23,47 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-g7bsa4b=j89%z47jpgf%e##*1)s7((pm#ypwe0sf)by%!2gsl2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # Set to False for production
 
-ALLOWED_HOSTS = []
+# Prevent content sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Activate browser XSS filtering
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent the site from being framed (clickjacking)
+X_FRAME_OPTIONS = 'DENY'
+
+# CSRF and session cookies over HTTPS only
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# HSTS settings (optional but recommended for production)
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']  # for development
+
+
+# Prevent browser from guessing content type
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# XSS filter in browser
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevent clickjacking
+X_FRAME_OPTIONS = 'DENY'
+
+# Cookies should only be sent over HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Application definition
@@ -37,9 +75,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # other apps
     'bookshelf',
+    'relationship_app',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +161,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#custom login and logout url
+LOGIN_URL = '/auth/login'
+LOGOUT_URL = '/auth/logout'
+
+# Custom user model
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
