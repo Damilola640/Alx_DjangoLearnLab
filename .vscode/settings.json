@@ -1,7 +1,9 @@
 {
-    "python-envs.defaultEnvManager": "ms-python.python:venv",
+    "python-envs.defaultEnvManager": "ms-python.python:system",
     "python-envs.pythonProjects": [],
     "python.pythonPath": "myenv/bin/python",
-    "python.venvPath": "/home/clement/Alx_DjangoLearnLab/api_project"
-
+    "python.venvPath": "/home/clement/Alx_DjangoLearnLab/api_project",
+    "python.analysis.extraPaths": [
+        "/home/clement/Alx_DjangoLearnLab/api_project/myenv/lib/python3.10/site-packages"
+    ],
 }
