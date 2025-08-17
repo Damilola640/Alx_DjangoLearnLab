@@ -6,7 +6,7 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     publication_year = models.IntegerField()
     author = models.ForeignKey(
-        Author,
+        
         related_name="book",  # Enables Author.book to access related books
         on_delete=models.CASCADE
     )
