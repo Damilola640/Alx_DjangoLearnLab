@@ -1,7 +1,6 @@
 from rest_framework import generics, permissions
 from rest_framework import filters
 from rest_framework.filters import SearchFilter,OrderingFilter
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Book
@@ -49,6 +48,9 @@ class BookDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
             return [IsAuthenticated()]
         return [permissions.AllowAny()]
+
+
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 
 class BookListView(generics.ListAPIView):
