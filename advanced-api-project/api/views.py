@@ -62,6 +62,11 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    # Add filter backends and ordering fields
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['title', 'publication_year', 'author__name']
+    ordering = ['title'] # Default ordering
+
 
 class BookDetailView(generics.RetrieveAPIView):
     """
