@@ -48,3 +48,48 @@ class BookDetailUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
             return [permissions.IsAuthenticated()]
         return [permissions.AllowAny()]
+
+
+class BookListView(generics.ListAPIView):
+    """
+    GET: List all books.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class BookDetailView(generics.RetrieveAPIView):
+    """
+    GET: Retrieve a single book by ID.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class BookCreateView(generics.CreateAPIView):
+    """
+    POST: Create a new book.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class BookUpdateView(generics.UpdateAPIView):
+    """
+    PUT/PATCH: Update an existing book.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class BookDeleteView(generics.DestroyAPIView):
+    """
+    DELETE: Delete a book.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticated]
