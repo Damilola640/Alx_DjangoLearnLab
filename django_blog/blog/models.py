@@ -46,16 +46,16 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    class Tag(models.Model):
+        name = models.CharField(max_length=50, unique=True)
+    def __str__(self):
+        return self.name
     class Meta:
         ordering = ['-created_at']
     
     def __str__(self):
         return f'Comment by {self.author.username} on {self.post.title}'
 
-class Tag(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    def __str__(self):
-        return self.name
 
 # Signal to automatically create profile when user is created
 @receiver(post_save, sender=User)
