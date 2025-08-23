@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% load static %}
+{% load i18n %}
+
+{% block styles %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>{% block title %}Login{% endblock %}</title>
+</head>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <h1>Login</h1>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div>{{ form.username.label_tag }} {{ form.username }}</div>
+    <div>{{ form.password.label_tag }} {{ form.password }}</div>
+    <button type="submit">Login</button>
+  </form>
+  <p>Account doesn't exist? <a href="{% url 'register' %}">Register</a>.</p>
+</div>
+{% endblock %}
