@@ -1,8 +1,8 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import get_user_model
-from .serializers import RegisterSerializer, LoginSerializer
+from .serializers import RegisterSerializer, LoginSerializer, UserSerializer, PostSerializer
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
@@ -107,6 +107,9 @@ def unfollow_user(request, user_id):
     target_user = get_object_or_404(CustomUser, id=user_id)
     current_user.unfollow(target_user)
     return JsonResponse({"message": f"You unfollowed {target_user.username}"})
+
+def action(self, request, pk=None):
+    raise NotImplementedError
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
