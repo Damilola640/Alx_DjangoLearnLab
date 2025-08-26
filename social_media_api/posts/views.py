@@ -7,7 +7,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import generics, APIView
+from rest_framework import generics
+from rest_framework.views import APIView
 
 # Create your views here.
 
@@ -49,3 +50,8 @@ def feed_view(request):
     following_users = user.following.all()
     posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
     return render(request, 'posts/feed.html', {'posts': posts})
+
+@api_view(['POST'])
+def unlike_post(request, pk):
+    # Your logic to unlike a post goes here
+    return Response({'message': 'Post unliked'}, status=status.HTTP_200_OK)
