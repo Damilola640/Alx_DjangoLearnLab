@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import get_user_model
 from rest_framework import viewsets, permissions, filters
 from .models import Post, Comment, Like
 from .serializers import PostSerializer, CommentSerializer
@@ -42,3 +43,9 @@ class LikePostView(APIView):
 
         if not created:
             return Response({"detail": "Already liked."}, status=status.HTTP_400_BAD_REQUEST)
+
+def feed_view(request):
+    user = request.user
+    following_users = user.following.all()
+    posts = Post.objects.filter(author__in=following_users).order_by('-created_at')
+    return render(request, 'posts/feed.html', {'posts': posts})
