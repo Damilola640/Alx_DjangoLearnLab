@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'accounts',  # App for the social media API
 ]
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
