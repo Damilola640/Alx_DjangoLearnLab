@@ -48,7 +48,7 @@ class CustomUser(AbstractUser):
         return self.following.count()
 
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="posts")
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='account_posts')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

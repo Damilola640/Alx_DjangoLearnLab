@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework', # Django REST framework
     'accounts',  # App for the social media API
+    'posts',     # App for posts, comments, likes
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
