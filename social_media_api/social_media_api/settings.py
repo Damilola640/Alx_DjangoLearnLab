@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', # Django REST framework
+
+     # ... other apps
     'accounts',  # App for the social media API
     'posts',     # App for posts, comments, likes
     'notifications', # App for notifications
