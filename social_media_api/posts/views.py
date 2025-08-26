@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from rest_framework.views import APIView
+from notifications.models import Notification
 
 # Create your views here.
 
@@ -45,6 +46,17 @@ class LikePostView(APIView):
         if not created:
             return Response({"detail": "Already liked."}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Create notification for the post author
+        if post.author != request.user:
+            Notification.objects.create(
+                recipient=post.author,
+                actor=request.user,
+                verb="liked",
+                target=post
+            )
+
+        return Response({"detail": "Post liked."}, status=status.HTTP_201_CREATED)
+
 def feed_view(request):
     user = request.user
     following_users = user.following.all()
@@ -53,5 +65,20 @@ def feed_view(request):
 
 @api_view(['POST'])
 def unlike_post(request, pk):
-    # Your logic to unlike a post goes here
-    return Response({'message': 'Post unliked'}, status=status.HTTP_200_OK)
+    post = generics.get_object_or_404(Post, pk=pk)
+    try:
+        like = Like.objects.get(user=request.user, post=post)
+        like.delete()
+
+        # Optionally, create a notification for unliking
+        if post.author != request.user:
+            Notification.objects.create(
+                recipient=post.author,
+                actor=request.user,
+                verb="unliked",
+                target=post
+            )
+
+        return Response({'message': 'Post unliked'}, status=status.HTTP_200_OK)
+    except Like.DoesNotExist:
+        return Response({'detail': 'You have not liked this post.'}, status=status.HTTP_400_BAD_REQUEST)
